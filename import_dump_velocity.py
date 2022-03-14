@@ -1,4 +1,3 @@
-
 import numpy as np
 
 timestep_flag = False
@@ -53,27 +52,27 @@ with open(file_name) as f:
 
         if atom_flag and not skip:
             if future_lines == 0:
-                data[-1]["atoms"] = np.zeros((data[-1]["num_atoms"], 15))
+                data[-1]["atoms"] = np.zeros((data[-1]["num_atoms"], 9))
 
             if future_lines < data[-1]["num_atoms"]:
                 
                 data[-1]["atoms"][future_lines,:] = np.array(
                     [
-                    int(line.split()[0]),
-                    int(line.split()[1]),
-                    int(line.split()[2]),
-                    float(line.split()[3]),
-                    float(line.split()[4]),
-                    float(line.split()[5]),
-                    int(line.split()[6]),
-                    int(line.split()[7]),
-                    int(line.split()[8]),
-                    float(line.split()[9]),
-                    float(line.split()[10]),
-                    float(line.split()[11]),
-                    float(line.split()[12]),
-                    float(line.split()[13]),
-                    float(line.split()[14])
+                    int(line.split()[0]),   #id
+                    int(line.split()[1]),   #type 
+                    int(line.split()[2]),    #mole
+                    #float(line.split()[3]),  
+                    #float(line.split()[4]),  
+                    #float(line.split()[5]),  
+                    #int(line.split()[6]),    
+                    #int(line.split()[7]),    
+                    #int(line.split()[8]),    
+                    float(line.split()[9]),  #xi
+                    float(line.split()[10]), #yi
+                    float(line.split()[11]), #zi
+                    float(line.split()[12]), #xu
+                    float(line.split()[13]), #xy
+                    float(line.split()[14])  #xz
                     ]
                 )
 
@@ -82,10 +81,21 @@ with open(file_name) as f:
             if future_lines >= data[-1]["num_atoms"]:
                 #print("Here")
                 #print(data[-1]["atoms"][0,:])
-                data[-1]["atoms"] = data[-1]["atoms"][data[-1]["atoms"][:,0].argsort()]
+                data[-1]["atoms"] = data[-1]["atoms"][data[-1]["atoms"][:,0].argsort()] 
+               
+##If the file is too big##
+
+  #              if data[-1]["timestep"] %20000 == 0:
+                 # print("mod 2")
+    #                data[-1]["atoms"] = data[-1]["atoms"][data[-1]["atoms"][:,0].argsort()]
+     #           else:
+     #               del data[-1]
+                    #print("deleted you")
                 #print(data[-1]["atoms"][0,:])
                 #data[-1]["atoms"] = np.array(data[-1]["atoms"])
+                #print(len(data))
                 atom_flag = False  
+
 
         #print("finished time step: ", str(data[-1]["timestep"]))
 #print(data[-1])
